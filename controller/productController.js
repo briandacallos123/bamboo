@@ -43,3 +43,20 @@ export const getAllProducts = async(req, res) =>{
     const response = await productModel.find();
     res.status(200).json({data:response})
 }
+
+
+export const getProductsByQuery = async(req, res) => {
+    try {
+        const {boss} = req.body
+
+        const result = await productModel.find({title:{ $regex: boss, $options: 'i' }})
+       
+        res.status(200).json({data:result})
+
+       
+       
+    } catch (error) {
+        res.status(500).json({error})
+        
+    }
+}
